@@ -21,15 +21,8 @@ public class AuthorDatabaseDao implements AuthorDao {
 
     public void add(AuthorEntity elem) throws SQLException {
         Session session = sessionFactory.openSession();
-        try{
-            session.save(elem);
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
+        session.save(elem);
+        session.close();
     }
 
     public void delete(int id) throws SQLException {

@@ -22,15 +22,8 @@ public class PhoneDatabaseDao implements PhoneDao {
 
     public void add(PhoneEntity elem) throws SQLException {
         Session session = sessionFactory.openSession();
-        try{
-            session.save(elem);
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
+        session.save(elem);
+        session.close();
     }
 
     public void delete(int id) throws SQLException {
