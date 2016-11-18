@@ -52,7 +52,7 @@ public class TestBookDatabaseDao {
 
     @Test
     public void getById() throws Exception {
-        int testId = 1;
+        int testId = 7;
         assertTrue(bookDao.getById(testId) != null);
     }
 

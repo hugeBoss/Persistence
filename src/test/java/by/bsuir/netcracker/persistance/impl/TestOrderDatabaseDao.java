@@ -54,7 +54,7 @@ public class TestOrderDatabaseDao {
 
     @Test
     public void getById() throws Exception {
-        int testId = 1;
+        int testId = 5;
         assertTrue(orderDao.getById(testId) != null);
     }
 
