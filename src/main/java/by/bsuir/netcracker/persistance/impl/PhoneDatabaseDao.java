@@ -1,0 +1,79 @@
+package by.bsuir.netcracker.persistance.impl;
+
+import by.bsuir.netcracker.persistance.dao.PhoneDao;
+import by.bsuir.netcracker.persistance.models.LanguageEntity;
+import by.bsuir.netcracker.persistance.models.PhoneEntity;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import javax.persistence.Query;
+import java.sql.SQLException;
+import java.util.List;
+
+/**
+ * Created by Huge Boss on 02.11.2016.
+ */
+public class PhoneDatabaseDao implements PhoneDao {
+    private SessionFactory sessionFactory;
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public void add(PhoneEntity elem) throws SQLException {
+        Session session = sessionFactory.openSession();
+        try{
+            session.save(elem);
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+    public void delete(int id) throws SQLException {
+        Session session = sessionFactory.openSession();
+
+        session.beginTransaction();
+        Query query = session.createQuery("delete PhoneEntity  WHERE id = :id");
+        query.setParameter("id", id );
+        query.executeUpdate();
+
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public void update(int id, PhoneEntity elem) throws SQLException {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("update PhoneEntity set phone = :phone, type_of_phone = :type_phone WHERE id = :id");
+        query.setParameter("phone", elem.getPhone());
+        query.setParameter("type_phone", elem.getTypeOfPhone());
+        query.setParameter("id", id );
+        query.executeUpdate();
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public List<PhoneEntity> getAll() throws SQLException {
+        Session session = sessionFactory.openSession();
+        List<PhoneEntity> phones = null;
+        Query query = session.createQuery("FROM PhoneEntity");
+        phones = query.getResultList();
+        session.close();
+        return phones;
+    }
+
+    public PhoneEntity getById(int id) throws SQLException {
+        Session session = sessionFactory.openSession();
+        PhoneEntity phone = null;
+        Query query = session.createQuery("FROM PhoneEntity WHERE id = :id");
+        query.setParameter("id", id);
+        phone = (PhoneEntity) query.getSingleResult();
+        session.close();
+
+        return phone;
+    }
+}

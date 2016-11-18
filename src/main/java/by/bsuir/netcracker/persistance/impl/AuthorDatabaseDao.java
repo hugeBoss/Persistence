@@ -1,0 +1,82 @@
+package by.bsuir.netcracker.persistance.impl;
+
+import by.bsuir.netcracker.persistance.dao.AuthorDao;
+import by.bsuir.netcracker.persistance.models.AuthorEntity;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import javax.persistence.Query;
+import java.sql.SQLException;
+import java.util.List;
+
+/**
+ * Created by Huge Boss on 02.11.2016.
+ */
+public class AuthorDatabaseDao implements AuthorDao {
+    private SessionFactory sessionFactory;
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public void add(AuthorEntity elem) throws SQLException {
+        Session session = sessionFactory.openSession();
+        try{
+            session.save(elem);
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+    public void delete(int id) throws SQLException {
+        Session session = sessionFactory.openSession();
+
+        session.beginTransaction();
+        Query query = session.createQuery("delete AuthorEntity  WHERE id = :id");
+        query.setParameter("id", id );
+        query.executeUpdate();
+        session.getTransaction().commit();
+    }
+
+    public void update(int id, AuthorEntity author) throws SQLException {
+        Session session = sessionFactory.openSession();
+
+        session.beginTransaction();
+        Query query = session.createQuery("update AuthorEntity set name = :name, surname = :surname WHERE id = :id");
+        query.setParameter("name", author.getName());
+        query.setParameter("surname", author.getSurname() );
+        query.setParameter("id", id );
+        query.executeUpdate();
+        session.getTransaction().commit();
+
+        session.close();
+
+    }
+
+    public List<AuthorEntity> getAll() throws SQLException {
+        Session session = sessionFactory.openSession();
+        List<AuthorEntity> authors = null;
+
+        Query query = session.createQuery("FROM AuthorEntity");
+        authors = query.getResultList();
+
+        session.close();
+
+        return  authors;
+    }
+
+    public AuthorEntity getById(int id) throws SQLException {
+        Session session = sessionFactory.openSession();
+        AuthorEntity author = null;
+        Query query = session.createQuery("FROM AuthorEntity WHERE id = :id");
+        query.setParameter("id", id);
+        author = (AuthorEntity) query.getSingleResult();
+        session.close();
+
+        return author;
+    }
+}
