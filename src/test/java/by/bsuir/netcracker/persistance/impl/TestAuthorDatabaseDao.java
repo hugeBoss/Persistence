@@ -6,6 +6,7 @@ import by.bsuir.netcracker.persistance.models.AuthorEntity;
 import by.bsuir.netcracker.persistance.models.BookEntity;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;

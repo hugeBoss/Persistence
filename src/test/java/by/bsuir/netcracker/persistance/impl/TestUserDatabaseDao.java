@@ -4,6 +4,7 @@ import by.bsuir.netcracker.persistance.dao.UserDao;
 import by.bsuir.netcracker.persistance.models.UserEntity;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
@@ -16,9 +17,10 @@ import static org.junit.Assert.*;
 public class TestUserDatabaseDao {
     ClassPathXmlApplicationContext context;
     UserDao userDao;
+
     @Before
     public void setUp() throws Exception {
-        context = new ClassPathXmlApplicationContext("spring.xml");
+       context = new ClassPathXmlApplicationContext("spring.xml");
         userDao = context.getBean(UserDao.class);
     }
 

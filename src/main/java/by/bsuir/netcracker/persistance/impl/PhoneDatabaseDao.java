@@ -5,6 +5,7 @@ import by.bsuir.netcracker.persistance.models.LanguageEntity;
 import by.bsuir.netcracker.persistance.models.PhoneEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Query;
 import java.sql.SQLException;
@@ -14,6 +15,8 @@ import java.util.List;
  * Created by Huge Boss on 02.11.2016.
  */
 public class PhoneDatabaseDao implements PhoneDao {
+
+    @Autowired
     private SessionFactory sessionFactory;
 
     public void setSessionFactory(SessionFactory sessionFactory) {

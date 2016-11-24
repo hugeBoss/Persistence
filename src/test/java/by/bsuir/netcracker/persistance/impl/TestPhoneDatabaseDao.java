@@ -7,6 +7,7 @@ import by.bsuir.netcracker.persistance.models.UserEntity;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
@@ -20,11 +21,12 @@ public class TestPhoneDatabaseDao {
     ClassPathXmlApplicationContext context;
     PhoneDao phoneDao;
     UserDao userDao;
+
     @Before
     public void setUp() throws Exception {
         context = new ClassPathXmlApplicationContext("spring.xml");
-        phoneDao = context.getBean(PhoneDao.class);
         userDao = context.getBean(UserDao.class);
+        phoneDao = context.getBean(PhoneDao.class);
     }
 
     @Test

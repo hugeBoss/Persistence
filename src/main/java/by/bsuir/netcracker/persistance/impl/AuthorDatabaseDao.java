@@ -4,6 +4,7 @@ import by.bsuir.netcracker.persistance.dao.AuthorDao;
 import by.bsuir.netcracker.persistance.models.AuthorEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Query;
 import java.sql.SQLException;
@@ -13,6 +14,8 @@ import java.util.List;
  * Created by Huge Boss on 02.11.2016.
  */
 public class AuthorDatabaseDao implements AuthorDao {
+
+    @Autowired
     private SessionFactory sessionFactory;
 
     public void setSessionFactory(SessionFactory sessionFactory) {
